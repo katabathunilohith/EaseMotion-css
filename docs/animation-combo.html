@@ -144,6 +144,17 @@
               style="width: 100%"
             />
           </div>
+          <div style="flex: 1; min-width: 150px">
+            <label for="iteration" class="ease-label">Iteration Count</label>
+            <input
+              type="text"
+              id="iteration"
+              value="1"
+              placeholder="e.g. 1, infinite"
+              class="ease-input"
+              style="width: 100%"
+            />
+          </div>
         </div>
 
         <div
@@ -227,6 +238,7 @@
       const searchInput = document.getElementById("animSearch");
       const durationInput = document.getElementById("duration");
       const delayInput = document.getElementById("delay");
+      const iterationInput = document.getElementById("iteration");
       const previewBox = document.getElementById("previewBox");
       const generatedCodeEl = document.getElementById("generatedClass");
       const copyBtn = document.getElementById("copyBtn");
@@ -266,12 +278,14 @@
         ).map((cb) => cb.value);
         const duration = durationInput.value;
         const delay = delayInput.value;
+        const iteration = iterationInput.value;
         // Build class string: combine selected classes and utility classes for duration/delay if needed.
         // Easemotion uses custom properties for speed, but for simplicity we add inline style.
         let classStr = selected.join(" ");
         previewBox.className = "animation-preview-box " + classStr;
         previewBox.style.animationDuration = duration + "ms";
         previewBox.style.animationDelay = delay + "ms";
+        previewBox.style.animationIterationCount = iteration;
         generatedCodeEl.textContent = classStr;
       }
 
@@ -285,6 +299,7 @@
       });
       durationInput.addEventListener("input", updateGenerated);
       delayInput.addEventListener("input", updateGenerated);
+      iterationInput.addEventListener("input", updateGenerated);
       copyBtn.addEventListener("click", () => {
         navigator.clipboard.writeText(generatedCodeEl.textContent);
         copyBtn.textContent = "Copied!";
